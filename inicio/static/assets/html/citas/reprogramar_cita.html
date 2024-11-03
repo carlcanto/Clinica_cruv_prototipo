@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reprogramar Cita</title>
+    <link rel="stylesheet" href="./../assets/css/main.css">
+    <link rel="stylesheet" href="./../assets/css/modal.css">
+    <link rel="stylesheet" href="./../assets/css/citas/reprogramar_cita.css">
+    <link rel="icon" href="./../assets/img/logo_up.png" type="image/x-icon">
+    <script src="fecha.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <img src="./../assets/img/logo_up.png" alt="logo up" width="100px" loop>
+            <div class="titulo-principal">
+                <h1>Citas</h1>
+            </div>
+            <div style="width: 100px;"></div>
+        </div>
+        <div class="menu-container">
+            <nav class="nav-title">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Pacientes</a>
+                        <ul class="submenu">
+                            <li><a href="./../pacientes/ver-pacientes.html">Ver Pacientes</a></li>
+                            <li><a href="./../pacientes/agregar-paciente.html">Agregar Paciente</a></li>
+                            <li><a href="./../pacientes/modificar-paciente.html">Modificar Paciente</a></li>
+                            <li><a href="./../pacientes/eliminar-paciente.html">Eliminar Paciente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Citas</a>
+                        <ul class="submenu">
+                            <li><a href="./ver_citas.html">Ver Citas</a></li>
+                            <li><a href="./programar_cita.html">Programar Cita</a></li>
+                            <li><a href="./reprogramar_cita.html">Reprogramar cita</a></li>
+                            <li><a href="./cancelar_cita.html">Cancelar Cita</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Consultorios</a>
+                        <ul class="submenu">
+                            <li><a href="./../consultorio/ver_consultorio.html">Ver Consultorios</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Reportes</a>
+                        <ul class="submenu">
+                            <li><a href="./../reportes/generar_reporte.html">Generar Reporte</a></li>
+                            <li><a href="./../reportes/enviar_reporte.html">Enviar Reporte</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Expedientes</a>
+                        <ul class="submenu">
+                            <li><a href="./../expedientes/ver_expediente.html">Ver Expedientes</a></li>
+                            <li><a href="./../expedientes/crear_expediente.html">Crear Expediente</a></li>
+                            <li><a href="./../expedientes/modificar_expediente.html">Modificar Expediente</a></li>
+                            <li><a href="./../expedientes/eliminar_expediente.html">Eliminar Expediente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Usuarios</a>
+                        <ul class="submenu">
+                            <li><a href="#">Ver Usuarios</a></li>
+                            <li><a href="#">Agregar Usuario</a></li>
+                            <li><a href="#">Modificar Usuario</a></li>
+                            <li><a href="#">Eliminar Usuario</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="./../menu.html">Volver</a>
+
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="table-container">
+            <h2>Reprogramar Cita</h2>
+            <input type="text" id="searchInput" onkeyup="filterPatients()" placeholder="Buscar cita...">
+            <button id="myBtnModal">Modificar</button>
+                <p id="errorMessage" style="color: red; display: none;">Cita no encontrada</p>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Reprogramar Cita</h2>
+            <form id="addPatientForm">
+                <label for="id_cita">ID de la Cita:</label>
+                <input type="number" id="id_cita" name="id_cita" required>
+
+                <label for="id_paciente">ID del Paciente:</label>
+                <input type="number" id="id_paciente" name="id_paciente" required>
+                
+                <label for="id_usuario">ID de quien registra la cita:</label>
+                <input type="number" id="id_usuario" name="id_usuario" required>
+                
+                <label for="fecha_cita">Fecha de la cita:</label>
+                <input type="date" id="fecha_cita" name="fecha_cita" required>
+                
+                <label for="hora_cita">Hora de la cita:</label>
+                <input type="time" id="hora_cita" name="hora_cita" required min="08:00" max="16:00">
+                <button type="submit" id="saveBtn">Guardar</button>
+            </form>
+        </div>
+    </div>
+    <script src="./../assets/js/modal.js"></script>
+    <script>
+        document.getElementById('fecha_cita').addEventListener('input', function(event) {
+            var input = event.target;
+            var date = new Date(input.value);
+            var day = date.getUTCDay();
+
+            // Si el día es sábado (6) o domingo (0), muestra un mensaje de error y limpia el campo
+            if (day === 0 || day === 6) {
+                alert('Por favor, seleccione una fecha de lunes a viernes.');
+                input.value = '';
+            }
+        });
+    </script>
+    <footer>
+        <p>&copy; 2024 Derechos reservados TRIBIQUE TECH BY: INGENIEROS IV AÑO 2024.</p>
+    </footer>
+</body>
+</html>

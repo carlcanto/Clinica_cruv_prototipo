@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Pacientes</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/pacientes/ver-pacientes.css' %}">
+    <link rel="icon" href="{% static 'assets/img/logo_up.png' %}" type="image/x-icon">
+    <script src="{% static 'assets/js/fecha.js' %}" defer></script>
+</head>
+<body>
+    {% for patient in paciente %}
+                <tr>
+                    <td>{{ patient.id_paciente }}</td>
+                    <td>{{ patient.nombre }}</td>
+                    <td>{{ patient.apellido }}</td>
+                    <!-- Add more cells for additional fields -->
+                </tr>
+            {% endfor %}
+    <div class="container">
+        <div class="title">
+            <img src="{% static 'assets/img/logo_up.png' %}" alt="logo up" width="100px" loop>
+            <div class="titulo-principal">
+                <h1>Pacientes</h1>
+            </div>
+            <div style="width: 100px;"></div>
+        </div>
+        <div class="menu-container">
+            <nav class="nav-title">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Pacientes</a>
+                        <ul class="submenu">
+                            <li><a href="/pacientes/ver/">Ver Pacientes</a></li>
+                            <li><a href="/pacientes/agregar/">Agregar Paciente</a></li>
+                            <li><a href="/pacientes/modificar/">Modificar Paciente</a></li>
+                            <li><a href="/pacientes/eliminar/">Eliminar Paciente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Citas</a>
+                        <ul class="submenu">
+                            <li><a href="/citas/ver/">Ver Citas</a></li>
+                            <li><a href="/citas/programar/">Programar Cita</a></li>
+                            <li><a href="/citas/reprogramar/">Reprogramar cita</a></li>
+                            <li><a href="/citas/cancelar/">Cancelar Cita</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Consultorios</a>
+                        <ul class="submenu">
+                            <li><a href="/ver_consultorios/">Ver Consultorios</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Reportes</a>
+                        <ul class="submenu">
+                            <li><a href="/reportes/generar/">Generar Reporte</a></li>
+                            <li><a href="/reportes/enviar/">Enviar Reporte</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Expedientes</a>
+                        <ul class="submenu">
+                            <li><a href="/expedientes/ver/">Ver Expedientes</a></li>
+                            <li><a href="/expedientes/crear/">Crear Expediente</a></li>
+                            <li><a href="/expedientes/modificar/">Modificar Expediente</a></li>
+                            <li><a href="/expedientes/eliminar/">Eliminar Expediente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/volver/">Volver</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="table-container">
+            <h2>Ver Pacientes</h2>
+            <input type="text" id="searchInput" onkeyup="filterPatients()" placeholder="Buscar paciente...">
+            <button id="myBtnModal">Buscar</button>
+                <p id="errorMessage" style="color: red; display: none;">Paciente no encontrado.</p>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Datos del Paciente</h2>
+        <form id="addPatientForm">
+            <label for="id_paciente">ID del Paciente:</label>
+            <input type="number" id="id_paciente" name="id_paciente" readonly>
+            
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" readonly>
+            
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" readonly>
+            
+            <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" readonly>
+            
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" name="edad" readonly>
+
+            <label for="sexo">Sexo:</label>
+            <input type="text" id="sexo" name="sexo" readonly>
+            
+            <label for="cedula">Cédula:</label>
+            <input type="text" id="cedula" name="cedula" readonly>
+            
+            <label for="seguro_social">Seguro Social:</label>
+            <input type="text" id="seguro_social" name="seguro_social" readonly>
+            
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion" readonly>
+            
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" name="telefono" readonly>
+            
+            <label for="lugar_de_trabajo">Lugar de Trabajo:</label>
+            <input type="text" id="lugar_de_trabajo" name="lugar_de_trabajo" readonly>
+            
+            <label for="ocupacion">Ocupación:</label>
+            <input type="text" id="ocupacion" name="ocupacion" readonly>
+            
+            <label for="direccion_trabajo">Dirección de Trabajo:</label>
+            <input type="text" id="direccion_trabajo" name="direccion_trabajo" readonly>
+            
+            <label for="telefono_trabajo">Teléfono de Trabajo:</label>
+            <input type="text" id="telefono_trabajo" name="telefono_trabajo" readonly>
+            
+            <label for="persona_emergencia">Persona de Emergencia:</label>
+            <input type="text" id="persona_emergencia" name="persona_emergencia" readonly>
+            
+            <label for="telefono_emergencia">Teléfono de Emergencia:</label>
+            <input type="text" id="telefono_emergencia" name="telefono_emergencia" readonly>
+            
+            <label for="direccion_emergencia">Dirección de Emergencia:</label>
+            <input type="text" id="direccion_emergencia" name="direccion_emergencia" readonly>
+            
+            <label for="relacion_emergencia">Relación de Emergencia:</label>
+            <input type="text" id="relacion_emergencia" name="relacion_emergencia" readonly>
+            
+            <button id="closeBtn">Cerrar</button>
+        </form>
+    </div>
+</div>
+    <footer>
+        <p>&copy; 2024 Derechos reservados TRIBIQUE TECH BY: INGENIEROS IV AÑO 2024.</p>
+    </footer>
+    <script>
+        document.getElementById('myBtnModal').addEventListener('click', function() {
+            var cedula = document.getElementById('searchInput').value;
+            fetch('{% url "buscar_paciente" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: new URLSearchParams({
+                    'cedula': cedula
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    // Mostrar mensaje de error y ocultar modal
+                    document.getElementById('errorMessage').style.display = 'block';
+                    document.getElementById('errorMessage').textContent = data.error;
+                    document.getElementById('myModal').style.display = 'none';
+                } else {
+                    // Ocultar mensaje de error
+                    document.getElementById('errorMessage').style.display = 'none';
+                    
+                    // Rellenar los campos del modal con los datos del paciente
+                    document.getElementById('id_paciente').value = data.id_paciente;
+                    document.getElementById('nombre').value = data.nombre;
+                    document.getElementById('apellido').value = data.apellido;
+                    document.getElementById('fecha_nacimiento').value = data.fecha_nacimiento;
+                    document.getElementById('edad').value = data.edad;
+                    document.getElementById('sexo').value = data.sexo;
+                    document.getElementById('cedula').value = data.cedula;
+                    document.getElementById('seguro_social').value = data.seguro_social;
+                    document.getElementById('direccion').value = data.direccion;
+                    document.getElementById('telefono').value = data.telefono;
+                    document.getElementById('lugar_de_trabajo').value = data.lugar_de_trabajo;
+                    document.getElementById('ocupacion').value = data.ocupacion;
+                    document.getElementById('direccion_trabajo').value = data.direccion_trabajo;
+                    document.getElementById('telefono_trabajo').value = data.telefono_trabajo;
+                    document.getElementById('persona_emergencia').value = data.persona_emergencia;
+                    document.getElementById('telefono_emergencia').value = data.telefono_emergencia;
+                    document.getElementById('direccion_emergencia').value = data.direccion_emergencia;
+                    document.getElementById('relacion_emergencia').value = data.relacion_emergencia;
+                    
+                    // Mostrar el modal
+                    document.getElementById('myModal').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+        
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+    </script>
+    <script src="{% static 'assets/js/modal.js' %}"></script>
+</body>
+</html>

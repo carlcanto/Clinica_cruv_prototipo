@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programar Cita</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/citas/programar_cita.css' %}">
+    <link rel="icon" href="{% static 'assets/img/logo_up.png' %}" type="image/x-icon">
+    <script src="{% static 'js/fecha.js' %}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <img src="{% static 'assets/img/logo_up.png' %}" alt="logo up" width="100px" loop>
+            <div class="titulo-principal">
+                <h1>Citas</h1>
+            </div>
+            <div style="width: 100px;"></div>
+        </div>
+        <div class="menu-container">
+            <nav class="nav-title">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Pacientes</a>
+                        <ul class="submenu">
+                            <li><a href="/pacientes/ver/">Ver Pacientes</a></li>
+                            <li><a href="/pacientes/agregar/">Agregar Paciente</a></li>
+                            <li><a href="/pacientes/modificar/">Modificar Paciente</a></li>
+                            <li><a href="/pacientes/eliminar/">Eliminar Paciente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Citas</a>
+                        <ul class="submenu">
+                            <li><a href="/citas/ver/">Ver Citas</a></li>
+                            <li><a href="/citas/programar/">Programar Cita</a></li>
+                            <li><a href="/citas/reprogramar/">Reprogramar cita</a></li>
+                            <li><a href="/citas/cancelar/">Cancelar Cita</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Consultorios</a>
+                        <ul class="submenu">
+                            <li><a href="/ver_consultorios/">Ver Consultorios</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Reportes</a>
+                        <ul class="submenu">
+                            <li><a href="/reportes/generar/">Generar Reporte</a></li>
+                            <li><a href="/reportes/enviar/">Enviar Reporte</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Expedientes</a>
+                        <ul class="submenu">
+                            <li><a href="/expedientes/ver/">Ver Expedientes</a></li>
+                            <li><a href="/expedientes/crear/">Crear Expediente</a></li>
+                            <li><a href="/expedientes/modificar/">Modificar Expediente</a></li>
+                            <li><a href="/expedientes/eliminar/">Eliminar Expediente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/volver/">Volver</a>
+
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="table-container">
+            <h2>Programar Cita</h2>
+            <button id="myBtnModal">Agregar</button>
+                <p id="errorMessage" style="color: red; display: none;">Cita no encontrada.</p>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Programar Cita</h2>
+          <form id="citaForm">
+            <label for="id_cita">ID Cita:</label>
+            <input type="text" id="id_cita" name="id_cita" required><br><br>
+      
+            <label for="id_paciente">ID Paciente:</label>
+            <input type="text" id="id_paciente" name="id_paciente" required><br><br>
+      
+            <label for="id_consultorio">ID Consultorio:</label>
+            <input type="text" id="id_consultorio" name="id_consultorio" required><br><br>
+      
+            <label for="id_medico">ID Médico:</label>
+            <input type="text" id="id_medico" name="id_medico" required><br><br>
+      
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" required><br><br>
+      
+            <label for="hora">Hora:</label>
+            <select id="hora" name="hora" required>
+              <!-- Opciones de horas -->
+              <option value="08:00">08:00 AM - 09:00 AM</option>
+              <option value="09:00">09:00 AM - 10:00 AM</option>
+              <option value="10:00">10:00 AM - 11:00 AM</option>
+              <option value="11:00">11:00 AM - 12:00 PM</option>
+              <option value="13:00">01:00 PM - 02:00 PM</option>
+              <option value="14:00">02:00 PM - 03:00 PM</option>
+              <option value="15:00">03:00 PM - 04:00 PM</option>
+              <option value="16:00">04:00 PM - 05:00 PM</option>
+            </select><br><br>
+      
+            <button type="submit">Guardar</button>
+          </form>
+        </div>
+      </div>
+    <script src="{% static 'assets/js/modal.js' %}"></script>
+    <footer>
+        <p>&copy; 2024 Derechos reservados TRIBIQUE TECH BY: INGENIEROS IV AÑO 2024.</p>
+    </footer>
+</body>
+</html>

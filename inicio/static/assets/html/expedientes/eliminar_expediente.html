@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Expedientes</title>
+    <link rel="stylesheet" href="./../assets/css/main.css">
+    <link rel="stylesheet" href="./../assets/css/modal.css">
+    <link rel="stylesheet" href="./../assets/css/expedientes/eliminar_expediente.css">
+    <link rel="icon" href="./../assets/img/logo_up.png" type="image/x-icon">
+    <script src="fecha.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <img src="./../assets/img/logo_up.png" alt="logo up" width="100px" loop>
+            <div class="titulo-principal">
+                <h1>Expedientes</h1>
+            </div>
+            <div style="width: 100px;"></div>
+        </div>
+        <div class="menu-container">
+            <nav class="nav-title">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Pacientes</a>
+                        <ul class="submenu">
+                            <li><a href="./../pacientes/ver-pacientes.html">Ver Pacientes</a></li>
+                            <li><a href="./../pacientes/agregar-paciente.html">Agregar Paciente</a></li>
+                            <li><a href="./../pacientes/modificar-paciente.html">Modificar Paciente</a></li>
+                            <li><a href="./../pacientes/eliminar-paciente.html">Eliminar Paciente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Citas</a>
+                        <ul class="submenu">
+                            <li><a href="./../citas/ver_citas.html">Ver Citas</a></li>
+                            <li><a href="./../citas/programar_cita.html">Programar Cita</a></li>
+                            <li><a href="./../citas/reprogramar_cita.html">Reprogramar cita</a></li>
+                            <li><a href="./../citas/cancelar_cita.html">Cancelar Cita</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Consultorios</a>
+                        <ul class="submenu">
+                            <li><a href="./../consultorio/ver_consultorio.html">Ver Consultorios</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Reportes</a>
+                        <ul class="submenu">
+                            <li><a href="./../reportes/generar_reporte.html">Generar Reporte</a></li>
+                            <li><a href="./../reportes/enviar_reporte.html">Enviar Reporte</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Expedientes</a>
+                        <ul class="submenu">
+                            <li><a href="./../expedientes/ver_expediente.html">Ver Expedientes</a></li>
+                            <li><a href="./../expedientes/crear_expediente.html">Crear Expediente</a></li>
+                            <li><a href="./../expedientes/modificar_expediente.html">Modificar Expediente</a></li>
+                            <li><a href="./../expedientes/eliminar_expediente.html">Eliminar Expediente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Usuarios</a>
+                        <ul class="submenu">
+                            <li><a href="#">Ver Usuarios</a></li>
+                            <li><a href="#">Agregar Usuario</a></li>
+                            <li><a href="#">Modificar Usuario</a></li>
+                            <li><a href="#">Eliminar Usuario</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="./../menu.html">Volver</a>
+
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="table-container">
+            <h2>Eliminar Expediente</h2>
+            <input type="text" id="searchInput" onkeyup="filterPatients()" placeholder="Buscar Expediente...">
+            <button id="myBtnModal">Eliminar</button>
+                <p id="errorMessage" style="color: red; display: none;">Paciente no encontrado.</p>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Confirmación de Eliminación</h2>
+            <p>¿Seguro que desea eliminar este expediente?</p>
+            <div class="button-container">
+                <button id="confirmDeleteBtn">Sí</button>
+                <button onclick="closeDeleteModal()">No</button>
+    </div>
+</div>
+    <footer>
+        <p>&copy; 2024 Derechos reservados TRIBIQUE TECH BY: INGENIEROS IV AÑO 2024.</p>
+    </footer>
+
+    <script src="./../assets/js/modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/menu.css' %}">
+    <link rel="icon" href="{% static '/assets/img/logo_up.png' %}" type="image/x-icon">
+    <script src="{% static 'assets/js/fecha.js' %}" defer></script>
+    <script>
+        function logout() {
+            fetch("{% url 'logout' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "{% url 'login' %}?message=cierre-de-sesion";
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <img src="{% static 'assets/img/logo_up.png' %}" alt="logo up" width="100px" loop>
+            <div class="titulo-principal">
+                <h1>Bienvenido al Menú Principal</h1>
+            </div>
+            <div style="width: 100px;"></div>
+        </div>
+        <div class="menu-container">
+            <nav class="nav-title">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Pacientes</a>
+                        <ul class="submenu">
+                            <li><a href="/pacientes/ver/">Ver Pacientes</a></li>
+                            <li><a href="/pacientes/agregar/">Agregar Paciente</a></li>
+                            <li><a href="/pacientes/modificar/">Modificar Paciente</a></li>
+                            <li><a href="/pacientes/eliminar/">Eliminar Paciente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Citas</a>
+                        <ul class="submenu">
+                            <li><a href="/citas/ver/">Ver Citas</a></li>
+                            <li><a href="/citas/programar/">Programar Cita</a></li>
+                            <li><a href="/citas/reprogramar/">Reprogramar cita</a></li>
+                            <li><a href="/citas/cancelar/">Cancelar Cita</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Consultorios</a>
+                        <ul class="submenu">
+                            <li><a href="/ver_consultorios/">Ver Consultorios</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Reportes</a>
+                        <ul class="submenu">
+                            <li><a href="/reportes/generar/">Generar Reporte</a></li>
+                            <li><a href="/reportes/enviar/">Enviar Reporte</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Expedientes</a>
+                        <ul class="submenu">
+                            <li><a href="/expedientes/ver/">Ver Expedientes</a></li>
+                            <li><a href="/expedientes/crear/">Crear Expediente</a></li>
+                            <li><a href="/expedientes/modificar/">Modificar Expediente</a></li>
+                            <li><a href="/expedientes/eliminar/">Eliminar Expediente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/login/" onclick="logout()">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="table-container">
+            <h2>Tabla de Horarios</h2>
+            <div class="datetime" id="datetime"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>HORARIO</th>
+                        <th>CITA</th>
+                        <th>PACIENTE</th>
+                        <th>CONSULTORIO</th>
+                        <th>DOCTORA</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-body"> </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Derechos reservados TRIBIQUE TECH BY: INGENIEROS IV AÑO 2024.</p>
+    </footer>
+    <script>
+        function generateSchedule() {
+            const startTime = 8; // 8:00 am
+            const endTime = 17; // 5:00 pm
+            const lunchBreakStart = 12; // 12:00 pm
+            const lunchBreakEnd = 13; // 1:00 pm
+            const scheduleBody = document.getElementById('schedule-body');
+
+            for (let hour = startTime; hour < endTime; hour++) {
+                if (hour >= lunchBreakStart && hour < lunchBreakEnd) {
+                    continue; // Saltar el almuerzo
+                }
+
+                const timeSlot = `${formatTime(hour)} - ${formatTime(hour + 1)}`;
+                const row = `
+                    <tr>
+                        <td>${timeSlot}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                `;
+                scheduleBody.innerHTML += row;
+            }
+        }
+
+        function formatTime(hour) {
+            const period = hour < 12 ? 'am' : 'pm';
+            const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+            return `${formattedHour}:00 ${period}`;
+        }
+
+        generateSchedule();
+
+        function mostrarFechaHora() {
+            const ahora = new Date();
+            const fechaHora = ahora.toLocaleString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
+            document.getElementById('datetime').textContent = fechaHora;
+        }
+
+        mostrarFechaHora();
+        setInterval(mostrarFechaHora, 1000);
+    </script>
+</body>
+</html>

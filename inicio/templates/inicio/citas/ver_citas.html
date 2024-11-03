@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Citas</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/citas/ver_citas.css' %}">
+    <link rel="icon" href="{% static 'assets/img/logo_up.png' %}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">
+            <img src="{% static 'assets/img/logo_up.png' %}" alt="logo up" width="100px">
+            <div class="titulo-principal">
+                <h1>Citas</h1>
+            </div>
+            <div style="width: 100px;"></div>
+        </div>
+        <div class="menu-container">
+            <nav class="nav-title">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Pacientes</a>
+                        <ul class="submenu">
+                            <li><a href="/pacientes/ver/">Ver Pacientes</a></li>
+                            <li><a href="/pacientes/agregar/">Agregar Paciente</a></li>
+                            <li><a href="/pacientes/modificar/">Modificar Paciente</a></li>
+                            <li><a href="/pacientes/eliminar/">Eliminar Paciente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Citas</a>
+                        <ul class="submenu">
+                            <li><a href="/citas/ver/">Ver Citas</a></li>
+                            <li><a href="/citas/programar/">Programar Cita</a></li>
+                            <li><a href="/citas/reprogramar/">Reprogramar cita</a></li>
+                            <li><a href="/citas/cancelar/">Cancelar Cita</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Consultorios</a>
+                        <ul class="submenu">
+                            <li><a href="/ver_consultorios/">Ver Consultorios</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Reportes</a>
+                        <ul class="submenu">
+                            <li><a href="/reportes/generar/">Generar Reporte</a></li>
+                            <li><a href="/reportes/enviar/">Enviar Reporte</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Expedientes</a>
+                        <ul class="submenu">
+                            <li><a href="/expedientes/ver/">Ver Expedientes</a></li>
+                            <li><a href="/expedientes/crear/">Crear Expediente</a></li>
+                            <li><a href="/expedientes/modificar/">Modificar Expediente</a></li>
+                            <li><a href="/expedientes/eliminar/">Eliminar Expediente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/volver/">Volver</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="table-container">
+            <h2>Ver Citas</h2>
+            <input type="text" id="searchInput" placeholder="Buscar por ID de cita...">
+            <button type="button" id="searchButton">Buscar</button>
+            <p id="errorMessage" style="color: red; display: none;">Cita no encontrada.</p>
+        </div>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Detalles de la Cita</h2>
+            <p>ID Cita: <span id="cita-id"></span></p>
+            <p>ID Usuario: <span id="cita-usuario"></span></p>
+            <p>ID Paciente: <span id="cita-paciente"></span></p>
+            <p>Fecha: <span id="cita-fecha"></span></p>
+            <p>Hora: <span id="cita-hora"></span></p>
+            <p>Estado: <span id="cita-estado"></span></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Derechos reservados TRIBIQUE TECH BY: INGENIEROS IV AÑO 2024.</p>
+    </footer>
+
+    <script>
+        $(document).ready(function () {
+            $('#searchButton').click(function () {
+                var citaId = $('#searchInput').val();
+
+                $.ajax({
+                    url: '{% url "buscar_cita" %}', // La URL para buscar citas en tu backend
+                    method: 'GET',
+                    data: {
+                        'id_cita': citaId
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#cita-id').text(response.cita.id);
+                            $('#cita-usuario').text(response.cita.usuario);
+                            $('#cita-paciente').text(response.cita.paciente);
+                            $('#cita-fecha').text(response.cita.fecha);
+                            $('#cita-hora').text(response.cita.hora);
+                            $('#cita-estado').text(response.cita.estado);
+
+                            $('#modal').show();
+                        } else {
+                            $('#errorMessage').show();
+                        }
+                    },
+                    error: function () {
+                        $('#errorMessage').show();
+                    }
+                });
+            });
+
+            $('.close').click(function () {
+                $('#modal').hide();
+            });
+
+            $(window).click(function (event) {
+                if ($(event.target).is('#modal')) {
+                    $('#modal').hide();
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

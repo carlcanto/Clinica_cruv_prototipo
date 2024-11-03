@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Pacientes</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/pacientes/eliminar-paciente.css' %}">
+    <link rel="icon" href="{% static 'assets/img/logo_up.png' %}" type="image/x-icon">
+    <script src="{% static 'assets/js/fecha.js' %}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <img src="{% static 'assets/img/logo_up.png' %}" alt="logo up" width="100px" loop>
+            <div class="titulo-principal">
+                <h1>Pacientes</h1>
+            </div>
+            <div style="width: 100px;"></div>
+        </div>
+        <div class="menu-container">
+            <nav class="nav-title">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Pacientes</a>
+                        <ul class="submenu">
+                            <li><a href="/pacientes/ver/">Ver Pacientes</a></li>
+                            <li><a href="/pacientes/agregar/">Agregar Paciente</a></li>
+                            <li><a href="/pacientes/modificar/">Modificar Paciente</a></li>
+                            <li><a href="/pacientes/eliminar/">Eliminar Paciente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Citas</a>
+                        <ul class="submenu">
+                            <li><a href="/citas/ver/">Ver Citas</a></li>
+                            <li><a href="/citas/programar/">Programar Cita</a></li>
+                            <li><a href="/citas/reprogramar/">Reprogramar cita</a></li>
+                            <li><a href="/citas/cancelar/">Cancelar Cita</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Consultorios</a>
+                        <ul class="submenu">
+                            <li><a href="/ver_consultorios/">Ver Consultorios</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Reportes</a>
+                        <ul class="submenu">
+                            <li><a href="/reportes/generar/">Generar Reporte</a></li>
+                            <li><a href="/reportes/enviar/">Enviar Reporte</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Expedientes</a>
+                        <ul class="submenu">
+                            <li><a href="/expedientes/ver/">Ver Expedientes</a></li>
+                            <li><a href="/expedientes/crear/">Crear Expediente</a></li>
+                            <li><a href="/expedientes/modificar/">Modificar Expediente</a></li>
+                            <li><a href="/expedientes/eliminar/">Eliminar Expediente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/volver/">Volver</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="table-container">
+            <h2>Eliminar Pacientes</h2>
+            <input type="text" id="searchInput" onkeyup="filterPatients()" placeholder="Buscar paciente...">
+            <button id="myBtnModal">Eliminar</button>
+                <p id="errorMessage" style="color: red; display: none;">Paciente no encontrado.</p>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Confirmación de Eliminación</h2>
+            <p>¿Seguro que desea eliminar este paciente?</p>
+            <div class="button-container">
+                <button id="confirmDeleteBtn">Sí</button>
+                <button onclick="closeDeleteModal()">No</button>
+    </div>
+</div>
+    <footer>
+        <p>&copy; 2024 Derechos reservados TRIBIQUE TECH BY: INGENIEROS IV AÑO 2024.</p>
+    </footer>
+    <script>
+        document.getElementById('myBtnModal').addEventListener('click', function() {
+            var cedula = document.getElementById('searchInput').value;
+            fetch('{% url "buscar_paciente" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: new URLSearchParams({
+                    'cedula': cedula
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    // Mostrar mensaje de error y ocultar modal
+                    document.getElementById('errorMessage').style.display = 'block';
+                    document.getElementById('myModal').style.display = 'none';
+                } else {
+                    // Ocultar mensaje de error
+                    document.getElementById('errorMessage').style.display = 'none';
+                    
+                    // Mostrar el modal de confirmación
+                    document.getElementById('myModal').style.display = 'block';
+        
+                    // Añadir evento al botón de confirmar eliminación
+                    document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+                        fetch('{% url "eliminar_paciente" %}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            },
+                            body: new URLSearchParams({
+                                'cedula': cedula
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Paciente eliminado exitosamente.');
+                                // Redirigir o actualizar la página
+                                window.location.reload();
+                            } else {
+                                alert('Error al eliminar el paciente.');
+                            }
+                            closeModal();
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+        
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }        
+    </script>
+    <script src="{% static 'assets/js/modal.js' %}"></script>
+</body>
+</html>

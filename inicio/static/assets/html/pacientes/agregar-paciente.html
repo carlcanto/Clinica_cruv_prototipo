@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Pacientes</title>
+    <link rel="stylesheet" href="./../assets/css/main.css">
+    <link rel="stylesheet" href="./../assets/css/modal.css">
+    <link rel="stylesheet" href="./../assets/css/pacientes/agregar-pacientes.css">
+    <link rel="icon" href="./../assets/img/logo_up.png" type="image/x-icon">
+    <script src="fecha.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <img src="./../assets/img/logo_up.png" alt="logo up" width="100px" loop>
+            <div class="titulo-principal">
+                <h1>Pacientes</h1>
+            </div>
+            <div style="width: 100px;"></div>
+        </div>
+        <div class="menu-container">
+            <nav class="nav-title">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Pacientes</a>
+                        <ul class="submenu">
+                            <li><a href="./../pacientes/ver-pacientes.html">Ver Pacientes</a></li>
+                            <li><a href="./../pacientes/agregar-paciente.html">Agregar Paciente</a></li>
+                            <li><a href="./../pacientes/modificar-paciente.html">Modificar Paciente</a></li>
+                            <li><a href="./../pacientes/eliminar-paciente.html">Eliminar Paciente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Citas</a>
+                        <ul class="submenu">
+                            <li><a href="./../citas/ver_citas.html">Ver Citas</a></li>
+                            <li><a href="./../citas/programar_cita.html">Programar Cita</a></li>
+                            <li><a href="./../citas/reprogramar_cita.html">Reprogramar cita</a></li>
+                            <li><a href="./../citas/cancelar_cita.html">Cancelar Cita</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Consultorios</a>
+                        <ul class="submenu">
+                            <li><a href="./../consultorio/ver_consultorio.html">Ver Consultorios</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Reportes</a>
+                        <ul class="submenu">
+                            <li><a href="./../reportes/generar_reporte.html">Generar Reporte</a></li>
+                            <li><a href="./../reportes/enviar_reporte.html">Enviar Reporte</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Expedientes</a>
+                        <ul class="submenu">
+                            <li><a href="./../expedientes/ver_expediente.html">Ver Expedientes</a></li>
+                            <li><a href="./../expedientes/crear_expediente.html">Crear Expediente</a></li>
+                            <li><a href="./../expedientes/modificar_expediente.html">Modificar Expediente</a></li>
+                            <li><a href="./../expedientes/eliminar_expediente.html">Eliminar Expediente</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Usuarios</a>
+                        <ul class="submenu">
+                            <li><a href="#">Ver Usuarios</a></li>
+                            <li><a href="#">Agregar Usuario</a></li>
+                            <li><a href="#">Modificar Usuario</a></li>
+                            <li><a href="#">Eliminar Usuario</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="./../menu.html">Volver</a>
+
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="table-container">
+            <h2>Agregar Pacientes</h2>
+            <button id="myBtnModal">Agregar Paciente</button>
+                <p id="errorMessage" style="color: red; display: none;">Paciente no encontrado.</p>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Agregar Paciente</h2>
+            <form id="addPatientForm">
+                <label for="id_paciente">ID del Paciente:</label>
+                <input type="number" id="id_paciente" name="id_paciente" required>
+                
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" required>
+                
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad" required>
+                
+                <label for="cedula">Cédula:</label>
+                <input type="text" id="cedula" name="cedula" required>
+                
+                <label for="seguro_social">Seguro Social:</label>
+                <input type="text" id="seguro_social" name="seguro_social" required>
+                
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" required>
+                
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" required>
+                
+                <label for="lugar_de_trabajo">Lugar de Trabajo:</label>
+                <input type="text" id="lugar_de_trabajo" name="lugar_de_trabajo" required>
+                
+                <label for="ocupacion">Ocupación:</label>
+                <input type="text" id="ocupacion" name="ocupacion" required>
+                
+                <label for="direccion_trabajo">Dirección de Trabajo:</label>
+                <input type="text" id="direccion_trabajo" name="direccion_trabajo" required>
+                
+                <label for="telefono_trabajo">Teléfono de Trabajo:</label>
+                <input type="text" id="telefono_trabajo" name="telefono_trabajo" required>
+                
+                <label for="persona_emergencia">Persona de Emergencia:</label>
+                <input type="text" id="persona_emergencia" name="persona_emergencia" required>
+                
+                <label for="telefono_emergencia">Teléfono de Emergencia:</label>
+                <input type="text" id="telefono_emergencia" name="telefono_emergencia" required>
+                
+                <label for="direccion_emergencia">Dirección de Emergencia:</label>
+                <input type="text" id="direccion_emergencia" name="direccion_emergencia" required>
+                
+                <label for="relacion_emergencia">Relación de Emergencia:</label>
+                <input type="text" id="relacion_emergencia" name="relacion_emergencia" required>
+                
+                <button type="submit" id="saveBtn">Guardar</button>
+            </form>
+        </div>
+    </div>
+    <script src="./../assets/js/modal.js"></script>
+    <footer>
+        <p>&copy; 2024 Derechos reservados TRIBIQUE TECH BY: INGENIEROS IV AÑO 2024.</p>
+    </footer>
+</body>
+</html>

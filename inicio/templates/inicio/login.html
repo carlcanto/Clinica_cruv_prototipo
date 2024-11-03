@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/reset-password.css' %}">
+    <link rel="icon" href="{% static '/assets/img/logo_up.png' %}" type="image/x-icon">
+    <script>
+        function showLogoutMessage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            if (message === 'cierre-de-sesion') {
+                alert('Cierre de sesión exitoso.');
+            }
+        }
+        window.onload = showLogoutMessage;
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <img src="{% static 'assets/img/login.gif' %}" alt="Logo" class="login-logo" loop>
+            <h2>Inicio de sesión</h2>
+            <p>Inicia sesión con tu nombre de usuario</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-box">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="username" placeholder="Admin" required autocomplete="off">
+                </div>
+                <div class="input-box">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" placeholder="Introduzca su Contraseña" required>
+                </div>
+                <button type="submit">Ingresar</button>
+                {% if error %}
+                <p id="errorMessage" style="color: red;">{{ error }}</p>
+                {% endif %}
+            </form>
+            <a href="/reset-password/" class="reset-password">Restablecer contraseña</a>
+        </div>
+    </div>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <footer>
+        <p>&copy; 2024.</p>
+    </footer>
+</body>
+</html>
